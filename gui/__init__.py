@@ -1,10 +1,11 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QLabel, QMainWindow, QWidget
-
+from PyQt6.QtWidgets import QApplication
 from .main_window import MainWindow
 
-def start_gui():
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec())
+
+def start_gui(config):
+  print(config)
+  app = QApplication(sys.argv)
+  window = MainWindow(None, config)
+  window.show()
+  sys.exit(app.exec())

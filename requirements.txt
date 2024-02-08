@@ -1,6 +1,16 @@
+coverage==7.4.1
 docx==0.2.4
+flake8==7.0.0
+iniconfig==2.0.0
 lxml==5.1.0
+mccabe==0.7.0
+packaging==23.2
 pillow==10.2.0
+pluggy==1.4.0
+pycodestyle==2.11.1
+pyflakes==3.2.0
 PyQt6==6.6.1
 PyQt6-Qt6==6.6.1
 PyQt6-sip==13.6.0
+pytest==8.0.0
+PyYAML==6.0.1

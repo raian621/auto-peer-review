@@ -1,0 +1,8 @@
+members:
+  self: Your Name
+  others:
+    - Member One
+    - Member Two
+    - Member Three
+    - Member Four
+    - Member Five
