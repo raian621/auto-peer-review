@@ -19,14 +19,18 @@ class MainWindow(QMainWindow):
     }
 
     self.stackedWidget = QStackedWidget()
-    self.setGeometry(50, 50, 800, 500)
+    self.setGeometry(50, 50, 100, 800)
     self.setCentralWidget(self.stackedWidget)
     self.setContentsMargins(0, 0, 0, 0)
 
     setViewCallback = lambda view: self.setView(view)
     mainMenu = MainMenu(None, setViewCallback)
     self.stackedWidget.addWidget(mainMenu)
-    reviewsWidget = ReviewsWidget(None, setViewCallback)
+    reviewsWidget = ReviewsWidget(
+      setViewCallback,
+      [self.config.members.selfName, *self.config.members.memberNames]
+    )
+    self.reviewsWidget = reviewsWidget
     self.stackedWidget.addWidget(reviewsWidget)
     settingsWidget = SettingsWidget(
       None,
@@ -35,9 +39,7 @@ class MainWindow(QMainWindow):
       config
     )
     self.stackedWidget.addWidget(settingsWidget)
-    if config != None:
-      reviewsWidget.setMembers(config.members)
-    else:
+    if config == None:
       self.setView('settings')
 
   def setView(self, view):
@@ -45,3 +47,8 @@ class MainWindow(QMainWindow):
 
   def updateConfig(self):
     self.config.save('config.yml')
+    self.reviewsWidget.setMembers([
+      self.config.members.selfName,
+      *self.config.members.memberNames
+    ])
+    self.reviewsWidget.initReviews()

@@ -97,7 +97,6 @@ class SettingsWidget(QScrollArea):
     config=None
   ):
     QWidget.__init__(self, parent)
-    self.setWidgetResizable(True)
     self.setView = setView
     self.updateConfig = updateConfig
     self.config = config
