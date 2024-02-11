@@ -120,7 +120,7 @@ class ReviewsWidget(QWidget):
       'interaction': 0,
       'meetings': 0,
       'overall': 0,
-      'comment': ''
+      'comments': ''
     } for name in self.memberNames]
 
   def tryUnlockForwardButton(self):
@@ -134,19 +134,22 @@ class ReviewsWidget(QWidget):
     self.forwardButton.setEnabled(shouldUnlock)
 
   def saveReviews(self):
-    generate_peer_review_doc(self.reviews, 'config.yml')
+    generate_peer_review_doc(
+      self.reviews,
+      'assets/data/peer_eval_template.docx'
+    )
 
   def showCurrentReview(self):
     self.nameLabel.setText(self.memberNames[self.reviewIndex])
     for key in self.starInputs.keys():
       self.starInputs[key].setStars(self.reviews[self.reviewIndex][key])
-    self.commentInput.setText(self.reviews[self.reviewIndex]['comment'])
+    self.commentInput.setText(self.reviews[self.reviewIndex]['comments'])
     self.tryUnlockForwardButton()
 
   def updateCurrentReview(self):
     for key in self.starInputs.keys():
       self.reviews[self.reviewIndex][key] = self.starInputs[key].getStars()
-    self.reviews[self.reviewIndex]['comment'] = self.commentInput.toPlainText()
+    self.reviews[self.reviewIndex]['comments'] = self.commentInput.toPlainText()
 
   def setMembers(self, memberNames):
     self.memberNames = memberNames
