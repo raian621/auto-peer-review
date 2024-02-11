@@ -3,7 +3,6 @@ from PyQt6.QtGui import *
 from .main_menu import MainMenu
 from .reviews import ReviewsWidget
 from .settings import SettingsWidget
-from .save_doc_window import SaveDocWindow
 
 
 class MainWindow(QMainWindow):

@@ -49,5 +49,9 @@ class SaveDocWindow(QWidget):
     self.setFilename(QFileDialog.getSaveFileName()[0])
 
   def saveDocument(self):
-    generate_peer_review_doc(self.reviews, self.filename, 'assets/data/peer_eval_template.docx')
+    generate_peer_review_doc(
+      self.reviews,
+      self.filename,
+      'assets/data/peer_eval_template.docx'
+    )
     self.close()
