@@ -3,6 +3,7 @@ from PyQt6.QtGui import *
 from .main_menu import MainMenu
 from .reviews import ReviewsWidget
 from .settings import SettingsWidget
+from .save_doc_window import SaveDocWindow
 
 
 class MainWindow(QMainWindow):
@@ -15,7 +16,7 @@ class MainWindow(QMainWindow):
     self.changeView = {
       'main': lambda: self.stackedWidget.setCurrentIndex(0),
       'review': lambda: self.stackedWidget.setCurrentIndex(1),
-      'settings': lambda: self.stackedWidget.setCurrentIndex(2)
+      'settings': lambda: self.stackedWidget.setCurrentIndex(2),
     }
 
     self.stackedWidget = QStackedWidget()

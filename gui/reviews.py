@@ -1,7 +1,7 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtCore import Qt
-from docgen import generate_peer_review_doc
+from .save_doc_window import SaveDocWindow
 
 
 REVIEW_STAR_DESCRIPTIONS = {
@@ -134,10 +134,9 @@ class ReviewsWidget(QWidget):
     self.forwardButton.setEnabled(shouldUnlock)
 
   def saveReviews(self):
-    generate_peer_review_doc(
-      self.reviews,
-      'assets/data/peer_eval_template.docx'
-    )
+    self.saveDocWindow = SaveDocWindow(self.reviews, None)
+    self.saveDocWindow.show()
+    self.setView('main')
 
   def showCurrentReview(self):
     self.nameLabel.setText(self.memberNames[self.reviewIndex])

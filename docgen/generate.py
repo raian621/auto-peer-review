@@ -16,8 +16,8 @@ REVIEW_DATA = {
 }
 
 
-def generate_peer_review_doc(reviews, filepath=None):
-  document = Document(filepath)
+def generate_peer_review_doc(reviews, destFilename, srcFilename=None):
+  document = Document(srcFilename)
   paragraph = None
   format = None
   for i, review in enumerate(reviews):
@@ -35,8 +35,9 @@ def generate_peer_review_doc(reviews, filepath=None):
 
     paragraph.format = format
 
-  paragraph.text += '\n'
-  document.save('demo.docx')
+  if paragraph != None:
+    paragraph.text += '\n'
+  document.save(destFilename)
 
 
 def add_review(review, paragraph, selfReview):
