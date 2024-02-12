@@ -2,6 +2,7 @@ from PyQt6.QtWidgets import *
 from docgen import generate_peer_review_doc
 from data import DOCX_TEMPLATE_PATH
 
+
 class SaveDocWindow(QWidget):
   def __init__(self, reviews, parent=None):
     QWidget.__init__(self, parent)
