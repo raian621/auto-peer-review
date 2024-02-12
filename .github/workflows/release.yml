@@ -4,15 +4,15 @@ on:
   workflow_run:
     workflows: ["Run linter, unit tests, and report coverage"]
     branches: ["main"]
-    tags: "v*"
 
 jobs:
   build:
+    if: startWith(github.ref, 'v')
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]:
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -20,20 +20,20 @@ jobs:
           python-version: 3.11
 
       - name: Install dependencies
-      - run: pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: Bundle project with PyInstaller
-      - run: |
+        run: |
           pyinstaller main.py \
             --add-data="assets/data/peer_eval_template.docx:assets/data:" \
             -n peer-eval-assistant
 
       - name: Package for Linux and MacOS
-      - run: zip dist/peer-eval-assistant
+        run: zip dist/peer-eval-assistant
         if: ${{ matrix.os != 'windows-latest' }}
 
       - name: Package for Windows
-      - run: |
+        run: |
           Compress-Archive \
             -Path dist/peer-eval-assistant \
             -Destination dist/peer-eval-assistant.zip
