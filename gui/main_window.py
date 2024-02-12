@@ -3,6 +3,7 @@ from PyQt6.QtGui import *
 from .main_menu import MainMenu
 from .reviews import ReviewsWidget
 from .settings import SettingsWidget
+from data import CONFIG_PATH
 
 
 class MainWindow(QMainWindow):
@@ -46,7 +47,7 @@ class MainWindow(QMainWindow):
     self.changeView[view]()
 
   def updateConfig(self):
-    self.config.save('config.yml')
+    self.config.save(CONFIG_PATH)
     self.reviewsWidget.setMembers([
       self.config.members.selfName,
       *self.config.members.memberNames

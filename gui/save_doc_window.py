@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import *
 from docgen import generate_peer_review_doc
-
+from data import DOCX_TEMPLATE_PATH
 
 class SaveDocWindow(QWidget):
   def __init__(self, reviews, parent=None):
@@ -52,6 +52,6 @@ class SaveDocWindow(QWidget):
     generate_peer_review_doc(
       self.reviews,
       self.filename,
-      'assets/data/peer_eval_template.docx'
+      DOCX_TEMPLATE_PATH
     )
     self.close()

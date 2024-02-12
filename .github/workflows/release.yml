@@ -1,0 +1,60 @@
+name: Create a release and build project for different platforms and architectures
+
+on:
+  workflow_run:
+    workflows: ["Run linter, unit tests, and report coverage"]
+    branches: ["main"]
+    tags: "v*"
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]:
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+      - run: pip install -r requirements.txt
+
+      - name: Bundle project with PyInstaller
+      - run: |
+          pyinstaller main.py \
+            --add-data="assets/data/peer_eval_template.docx:assets/data:" \
+            -n peer-eval-assistant
+
+      - name: Package for Linux and MacOS
+      - run: zip dist/peer-eval-assistant
+        if: ${{ matrix.os != 'windows-latest' }}
+
+      - name: Package for Windows
+      - run: |
+          Compress-Archive \
+            -Path dist/peer-eval-assistant \
+            -Destination dist/peer-eval-assistant.zip
+        if: ${{ matrix.os == 'windows-latest' }}
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/peer-eval-assistant.zip
+          asset_name: peer-eval-assistant-${{ matrix.os }}-${{ github.ref }}.zip
+          asset_content_type: application/zip
+
